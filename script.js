@@ -2,6 +2,10 @@
     window.location.href = "login.html";
   }
   
+  
+  
+  console.log("Login Status:", localStorage.getItem("isLoggedIn"));
+
   const profiles = [
     {
       name: "Aisha Sharma",
@@ -102,4 +106,36 @@ function goToProfile() {
   }
   // Initial render
   renderCards();
+
+
+  function showToast(msg, color = "#ff4444") {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = msg;
+    toast.style.background = color;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add("show"), 10);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 2000);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".request-btn");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", function (e) {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        if (!isLoggedIn) {
+          e.preventDefault();
+          showToast("🚫 Please log in to request a skill.");
+        } else {
+          showToast("✅ Request sent!", "#00c896");
+          // Add your request action here (e.g. open modal, send request, etc)
+        }
+      });
+    });
+  });
 
