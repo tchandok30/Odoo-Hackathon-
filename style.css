@@ -4,6 +4,26 @@
       box-sizing: border-box;
     }
 
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #ff4444;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+    font-weight: 500;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #0d0d0d, #1a1a1a);

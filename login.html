@@ -144,6 +144,7 @@
  <script>
   
   
+
   function loginUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -154,6 +155,35 @@
       // Redirect on successful login
       window.location.href = "index.html";
     }
+  }document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".request-btn");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", function (e) {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        if (!isLoggedIn) {
+          e.preventDefault();
+          showToast("🚫 Please log in to request a skill.");
+        } else {
+          showToast("✅ Request sent!", "#00c896");
+          // actual request logic can go here
+        }
+      });
+    });
+  });
+
+  function showToast(msg, color = "#ff4444") {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = msg;
+    toast.style.background = color;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add("show"), 10);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 2000);
   }
 
 </script>

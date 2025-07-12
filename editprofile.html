@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Create Profile | GrowMate</title>
+  <title>Edit Profile | GrowMate</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
@@ -83,6 +83,15 @@
       color: #ff6666;
     }
 
+    .profile-img-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 15px;
+    }
+
     button {
       width: 100%;
       padding: 14px;
@@ -105,28 +114,29 @@
 <body>
 
   <div class="container">
-    <h2>Create Your Profile</h2>
+    <h2>Edit Your Profile</h2>
 
-    <form id="profileForm">
+    <form id="editProfileForm">
+      <label for="profileImage">Profile Photo</label>
+      <input type="file" id="profileImage" accept="image/*" />
+      <img id="profilePreview" class="profile-img-preview" src="" alt="Profile Preview" />
+
       <label for="name">Full Name</label>
       <input type="text" id="name" required />
 
       <label for="location">Location</label>
       <input type="text" id="location" required />
 
-      <!-- Skills Offered -->
       <label>Skills Offered</label>
       <div class="tag-input" id="skillsOfferedContainer">
         <input type="text" id="skillsOfferedInput" placeholder="Type and press Enter" />
       </div>
 
-      <!-- Skills Wanted -->
       <label>Skills Wanted</label>
       <div class="tag-input" id="skillsWantedContainer">
         <input type="text" id="skillsWantedInput" placeholder="Type and press Enter" />
       </div>
 
-      <!-- Availability -->
       <label for="availability">Availability</label>
       <select id="availability">
         <option value="Weekdays">Weekdays</option>
@@ -135,7 +145,7 @@
         <option value="Flexible">Flexible</option>
       </select>
 
-      <button type="submit">Save Profile</button>
+      <button type="submit">Update Profile</button>
     </form>
   </div>
 <div id="toast" class="toast">Profile Saved ✅</div>
@@ -187,17 +197,36 @@
       const tag = document.createElement("div");
       tag.classList.add("tag");
       tag.innerHTML = `${value} <span>&times;</span>`;
-
       tag.querySelector("span").addEventListener("click", () => {
         container.removeChild(tag);
         const index = listRef.indexOf(value);
         if (index !== -1) listRef.splice(index, 1);
       });
-
       container.insertBefore(tag, container.querySelector("input"));
     }
 
-    document.getElementById("profileForm").addEventListener("submit", function (e) {
+    function populateTags(containerId, listRef) {
+      const container = document.getElementById(containerId);
+      listRef.forEach(value => createTag(container, value, listRef));
+    }
+
+    function previewImage(input) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("profilePreview").src = e.target.result;
+          localStorage.setItem("growmateProfileImage", e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    document.getElementById("profileImage").addEventListener("change", function () {
+      previewImage(this);
+    });
+
+    document.getElementById("editProfileForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const name = document.getElementById("name").value.trim();
@@ -218,16 +247,34 @@
       };
 
       localStorage.setItem("growmateProfile", JSON.stringify(profile));
-      showToast("✅ Profile saved!");
+      showToast("✅ Profile updated!");
 setTimeout(() => {
-  window.location.href = "view-profile.html";
-}, 2000);; // optional redirect
+  window.location.href = "index.html";
+}, 2000);
+
     });
 
-    // Initialize inputs
+    // Initialize tag inputs
     setupTagInput("skillsOfferedInput", "skillsOfferedContainer", skillsOffered);
     setupTagInput("skillsWantedInput", "skillsWantedContainer", skillsWanted);
-  function showToast(message) {
+
+    // Load existing profile
+    window.onload = function () {
+      const data = JSON.parse(localStorage.getItem("growmateProfile"));
+      const imageData = localStorage.getItem("growmateProfileImage");
+      if (data) {
+        document.getElementById("name").value = data.name || "";
+        document.getElementById("location").value = data.location || "";
+        document.getElementById("availability").value = data.availability || "";
+        skillsOffered = data.skillsOffered || [];
+        skillsWanted = data.skillsWanted || [];
+        populateTags("skillsOfferedContainer", skillsOffered);
+        populateTags("skillsWantedContainer", skillsWanted);
+      }
+      if (imageData) {
+        document.getElementById("profilePreview").src = imageData;
+      }
+    };function showToast(message) {
   const toast = document.getElementById("toast");
   toast.textContent = message;
   toast.classList.add("show");
@@ -236,7 +283,7 @@ setTimeout(() => {
     toast.classList.remove("show");
   }, 1800);
 }
-</script>
 
+  </script>
 </body>
 </html>
