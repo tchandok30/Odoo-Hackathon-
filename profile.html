@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Profile | GrowMate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    .tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  min-height: 50px;
+}
+
+.tag-input input {
+  border: none;
+  background: transparent;
+  color: white;
+  flex: 1;
+  font-size: 1rem;
+  min-width: 150px;
+}
+
+.tag {
+  background: #003566;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #90e0ef;
+}
+
+.tag span {
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff6666;
+}
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #000814, #001d3d);
+      color: white;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #111;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 180, 255, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #00d4ff;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      color: #90e0ef;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #1a1a1a;
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    input[type="file"] {
+      background: none;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #0096c7, #48cae4);
+    }
+
+    .preview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #00b4d8;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Create Your Profile</h2>
+
+    <form id="profileForm" onsubmit="handleProfileSubmit(event)">
+      <!-- Profile Picture -->
+      <label for="photo">Profile Photo</label>
+      <input type="file" id="photo" accept="image/*" onchange="previewPhoto(event)" />
+      <img id="photoPreview" class="preview" style="display: none;" />
+
+      <!-- Name -->
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+
+      <!-- Location -->
+      <label for="location">Location</label>
+      <input type="text" id="location" required />
+
+      <!-- Skills Offered -->
+    
+    <!-- Skills Offered -->
+<label for="skillsOffered">Skills Offered</label>
+<div class="tag-input" id="skillsOfferedContainer">
+  <input type="text" id="skillsOfferedInput" placeholder="Type a skill and press Enter" />
+</div>
+
+<!-- Skills Wanted -->
+<label for="skillsWanted">Skills Wanted</label>
+<div class="tag-input" id="skillsWantedContainer">
+  <input type="text" id="skillsWantedInput" placeholder="Type a skill and press Enter" />
+</div>
+
+
+      <!-- Availability -->
+      <label for="availability">Availability</label>
+      <select id="availability">
+        <option value="Weekdays">Weekdays</option>
+        <option value="Evenings">Evenings</option>
+        <option value="Weekends">Weekends</option>
+        <option value="Flexible">Flexible</option>
+      </select>
+
+      <!-- Submit Button -->
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+
+  <script>
+    function previewPhoto(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById('photoPreview');
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+      }
+    }
+
+    function handleProfileSubmit(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const location = document.getElementById("location").value;
+      const skillsOffered = document.getElementById("skillsOffered").value;
+      const skillsWanted = document.getElementById("skillsWanted").value;
+      const availability = document.getElementById("availability").value;
+
+      // You can save this data to localStorage or send to server later
+      console.log("Profile Submitted:", {
+        name, location, skillsOffered, skillsWanted, availability
+      });
+
+      alert("✅ Profile Created Successfully!");
+
+      // Optional: Redirect to user dashboard or homepage
+      // window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
