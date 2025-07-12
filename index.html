@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GrowMate UI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav>
+    <div class="brand-container">
+      <div class="brand">
+        <img src="https://img.icons8.com/fluency/48/plant-under-sun.png" alt="GrowMate Icon" />
+        GrowMate
+      </div>
+      <div class="tagline">Swap Skills. Grow Together.</div>
+    </div>
+    <div class="buttons">
+        <button class="btn profile-btn" onclick="goToProfile()">Create Profile</button>
+      <button class="btn login-btn" onclick="goToLogin()">Login</button>
+<button class="btn signup-btn" onclick="goToLogin()">Sign Up</button>
+
+    </div>
+  </nav>
+
+  <section class="search-section">
+    <div class="availability-select">
+      <select>
+        <option disabled selected>Availability</option>
+        <option>Weekdays</option>
+        <option>Weekends</option>
+        <option>Evenings</option>
+        <option>Anytime</option>
+      </select>
+    </div>
+    <div class="search-bar">
+      <label for="search">Search:</label>
+      <input type="text" id="search" placeholder="Skills or people..." />
+    </div>
+  </section>
+
+<section class="vertical-cards" id="card-list">
+  <!-- Cards will be inserted here via JS -->
+</section>
+
+<div class="pagination">
+  <button onclick="prevPage()">← Prev</button>
+  <span id="page-number">Page 1</span>
+  <button onclick="nextPage()">Next →</button>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
