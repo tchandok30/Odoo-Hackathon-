@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+ body{
+    background-color: black;
+    color: white;
+
+ }
+.box{
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 25px;
+    width: 35vw;
+    font-size: 23px;
+    font-family: "Dancing Script", cursive;
+    font-weight: 400;
+}
+
+.container{
+    height: 100vh;
+}
+
+.select select *{
+    background-color: white;
+}
+.select select{
+    background-color: white;
+}
+
+.select span{
+    color: white;
+}
+
+.text textarea{
+    border-radius: 12px;
+}
+
+.text input{
+    border-radius: 2px;
+     font-family: "Dancing Script", cursive;
+     padding: 5px;
+     font-weight: 800;
+    
+}
+
+.select select{
+    border-radius: 5px;
+    width: 15vw;
+    padding: 5px 0;
+}
