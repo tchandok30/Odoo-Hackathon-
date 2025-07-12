@@ -8,41 +8,80 @@
     <link rel="stylesheet" href="utility.css">
 </head>
 <body>
-    <div class="container" >
-        <header>
-            <nav class="flex" style="justify-content: space-between;">
-                <div class="Platform">GrowMate</div>
-                <div class="right-nav">
-                    <div>Swap Request</div>
-                    <div>Home</div>
-                    <button><img src="" alt="profile"></button>
-                </div>
-            </nav>
-        </header>
-
-        <main>
-    <div class="req">
-        <button id="requestbtn">Request</button>
+ 
+<main style="display: flex; justify-content: center; align-items: center; min-height: 90vh;">
+  <div class="profile-card" style="background: #001d3d; color: white; border: 1px solid #00d4ff; border-radius: 12px; padding: 30px 40px; width: 90%; max-width: 800px; display: flex; justify-content: space-between; gap: 30px; box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);">
+    <div class="profile-left">
+      <h2 id="profile-name" style="color: #00d4ff; margin-bottom: 10px;">User</h2>
+      <div style="margin-bottom: 10px;">
+        <strong>Skills Offered:</strong>
+        <div id="skills-offered" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px;"></div>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <strong>Skills Wanted:</strong>
+        <div id="skills-wanted" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px;"></div>
+      </div>
+      <div class="feedback" style="margin-top: 15px;">
+        <strong>Rating and Feedback:</strong><br>
+        <span id="rating-stars">⭐⭐⭐⭐☆</span><br>
+        <div id="feedback-comment" style="margin-top: 5px;">“Great to work with!”</div>
+      </div>
+      <button id="requestbtn" style="margin-top: 20px; background: #00d4ff; color: black; padding: 8px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Request Swap</button>
     </div>
-
-    <div class="profile-section">
-        <div class="profile-left">
-            <h2>Marc Demo</h2>
-            <p><strong>Skills Offered:</strong> Graphic Design, Video Editing, Canva</p>
-            <p><strong>Skills Wanted:</strong> Web Development, ReactJS, Node.js</p>
-            <p class="feedback"><strong>Rating and Feedback:</strong><br>
-                ⭐⭐⭐⭐☆ (4.5/5)<br>
-                “Marc is super creative and helped me make an amazing video intro!”
-            </p>
-        </div>
-
-        <div class="profile-photo">
-            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Profile" />
-        </div>
+    <div class="profile-photo" style="min-width: 150px; max-width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 2px solid #00d4ff;">
+      <img id="profile-photo" src="" alt="Profile Photo" style="width: 100%; height: 100%; object-fit: cover;"/>
     </div>
+  </div>
 </main>
 
-    </div>
-    <script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const profile = JSON.parse(localStorage.getItem("selectedProfile"));
+    if (!profile) return;
+
+    document.getElementById("profile-photo").src = profile.photo;
+    document.getElementById("profile-name").textContent = profile.name;
+
+    // Render skill tags
+    const offered = profile.offered.split(',').map(s => s.trim());
+    const wanted = profile.wanted.split(',').map(s => s.trim());
+
+    const offeredContainer = document.getElementById("skills-offered");
+    const wantedContainer = document.getElementById("skills-wanted");
+
+    offered.forEach(skill => {
+      const tag = document.createElement("span");
+      tag.textContent = skill;
+      tag.style.background = "#00d4ff";
+      tag.style.color = "black";
+      tag.style.padding = "4px 10px";
+      tag.style.borderRadius = "12px";
+      tag.style.fontSize = "14px";
+      offeredContainer.appendChild(tag);
+    });
+
+    wanted.forEach(skill => {
+      const tag = document.createElement("span");
+      tag.textContent = skill;
+      tag.style.background = "#00d4ff";
+      tag.style.color = "black";
+      tag.style.padding = "4px 10px";
+      tag.style.borderRadius = "12px";
+      tag.style.fontSize = "14px";
+      wantedContainer.appendChild(tag);
+    });
+
+    document.getElementById("rating-stars").innerHTML =
+      "⭐".repeat(profile.rating) + "☆".repeat(5 - profile.rating);
+  });
+
+  document.getElementById("requestbtn").addEventListener("click", () => {
+    window.location.href = "screen5.html";
+  });
+</script>
+
+
+
+
 </body>
 </html>
